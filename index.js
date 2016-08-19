@@ -4,11 +4,18 @@ var express = require("express");
 var service = require("./service");
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
+var hogan = require("hogan");
+var fs = require("fs");
+var indexTmpl = hogan.compile(fs.readFileSync("./web-src/index.html", {encoding: "utf-8"}));
 
 module.exports = function(config){
 	var app = express();
 	app.use(bodyParser.urlencoded({extended: false}));
 	app.use(bodyParser.json());
+	app.use("/", function(req, res){
+		var drawerPage = "var drawerPage = []";
+		res.end(indexTmpl.render({drawerPage: drawerPage}));
+	})
 	// app.use("/service", function(req, res){
 	// 	app.disable("etag");
 	// 	var q = req.query._q;
