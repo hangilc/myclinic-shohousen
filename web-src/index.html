@@ -8,6 +8,11 @@
     <script src="drawer/drawer-svg.js"></script>
     <script src="myclinic-util.js"></script>
     -->
+    <style>
+    	html|* > svg {
+    		transform-origin: 0 0 0;
+    	}
+    </style>
 </head>
 <body>
 <div>
@@ -17,9 +22,10 @@
     </select>
     <button id="managePrinterButton">プリンター設定</button>
 </div>
-<div id="preview-wrapper" style="width:148mm;height:210mm;border:1px solid black"></div>
+<!-- <div id="preview-wrapper" style="width:148mm;height:210mm;border:1px solid black;padding:0;"></div> -->
+<div id="preview-wrapper" style="width:148mm;height:210mm;border:1px solid black;padding:0;"></div>
 <script>
-    var drawerPages = {{& drawerPage}};
+    var drawerPages = {{& drawerPage}}; 
 </script>
 <script src="./bundle.js"></script>
 </body>
