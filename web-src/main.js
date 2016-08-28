@@ -22,7 +22,6 @@ var printerSettingLocalStorageKey = "ShohousenPrinterSetting";
 
 function getSelectedSetting(){
 	var setting = window.localStorage.getItem(printerSettingLocalStorageKey);
-	console.log("SETTING", setting);
 	return setting;
 }
 
@@ -96,7 +95,6 @@ function bindChooseSetting(e){
 						checked: item === currentSetting
 					};
 				});
-				console.log(list);
 				var html = settingsTmpl.render({list: list, nosetting: !currentSetting});
 				document.getElementById(settingWorkArea).innerHTML = html;
 			})
@@ -114,7 +112,6 @@ function bindWorkArea(e){
 			e.innerHTML = "";
 		} else if( target.tagName === "INPUT" && target.getAttribute("type") === "radio" ) {
 			var value = target.getAttribute("value");
-			console.log("VALUE", value);
 			if( value === "" ){
 				removeSelectedSetting();
 			} else {

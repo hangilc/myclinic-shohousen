@@ -68,7 +68,6 @@
 
 	function getSelectedSetting(){
 		var setting = window.localStorage.getItem(printerSettingLocalStorageKey);
-		console.log("SETTING", setting);
 		return setting;
 	}
 
@@ -142,7 +141,6 @@
 							checked: item === currentSetting
 						};
 					});
-					console.log(list);
 					var html = settingsTmpl.render({list: list, nosetting: !currentSetting});
 					document.getElementById(settingWorkArea).innerHTML = html;
 				})
@@ -160,7 +158,6 @@
 				e.innerHTML = "";
 			} else if( target.tagName === "INPUT" && target.getAttribute("type") === "radio" ) {
 				var value = target.getAttribute("value");
-				console.log("VALUE", value);
 				if( value === "" ){
 					removeSelectedSetting();
 				} else {
