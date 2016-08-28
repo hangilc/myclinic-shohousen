@@ -21,7 +21,6 @@
     "myclinic-drawer": "^1.0.0",
     "myclinic-drawer-forms": "^1.0.0",
     "myclinic-drawer-svg": "^1.0.1",
-    "mysql": "^2.11.1",
     "raw-loader": "^0.5.1"
   },
   "devDependencies": {
