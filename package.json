@@ -17,6 +17,7 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "hogan": "^1.0.2",
+    "moment": "^2.14.1",
     "myclinic-drawer": "^1.0.0",
     "myclinic-drawer-forms": "^1.0.0",
     "myclinic-drawer-svg": "^1.0.1",
