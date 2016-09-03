@@ -190,10 +190,16 @@ module.exports = function(config){
 	});
 	app.post("/", function(req, res){
 		var data = createBaseData(config);
-		for(var key in req.body ){
-			data[key] = req.body[key];
+		var postData;
+		if( "json-data" in req.body ){
+			postData = JSON.parse(req.body["json-data"]);
+		} else {
+			postData = req.body;
 		}
-		render(req, res, req.body);
+		for(var key in postData ){
+			data[key] = postData[key];
+		}
+		render(req, res, data);
 	});
 	app.get("/test", function(req, res){
 		render(req, res, {
