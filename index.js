@@ -80,58 +80,6 @@ function render(req, res, data){
 	})); 
 }
 
-function applyDbData(data, dbData){
-	var patient = dbData.patient;
-	if( patient ){
-		var lastName = patient.last_name || "";
-		var firstName = patient.first_name || "";
-		if( lastName || firstName ){
-			data.shimei = lastName + firstName;
-		}
-		if( patient.birth_day && patient.birth_day !== "0000-00-00" ){
-			var birthday = moment(patient.birth_day);
-			if( birthday.isValid() ){
-				data.birthday = [birthday.year(), birthday.month()+1, birthday.date()];
-			}
-		}
-		if( patient.sex === "M" || patient.sex === "F" ){
-			data.sex = patient.sex;
-		}
-	}
-	var visit = dbData.visit;
-	if( visit ){
-		var shahokokuho = visit.shahokokuho;
-		if( shahokokuho ){
-			data["hokensha-bangou"] = "" + shahokokuho.hokensha_bangou;
-			data.hihokensha = [shahokokuho.hihokensha_kigou || "", shahokokuho.hihokensha_bangou || ""].join(" ・ ");
-			if( 0 === +shahokokuho.honnin ){
-				data["kubun-hifuyousha"] = true;
-			} else if( 1 === +shahokokuho.honnin ){
-				data["kubun-hihokensha"] = true;
-			}
-		}
-		var koukikourei = visit.koukikourei;
-		if( koukikourei ){
-			data["hokensha-bangou"] = "" + koukikourei.hokensha_bangou;
-			data["hihokensha"] = "" + koukikourei.hihokensha_bangou;
-		}
-		var kouhi_list = visit.kouhi_list || [];
-		if( kouhi_list.length > 0 ){
-			data["kouhi-1-futansha"] = kouhi_list[0].futansha;
-			data["kouhi-1-jukyuusha"] = kouhi_list[0].jukyuusha;
-		}
-		if( kouhi_list.length > 1 ){
-			data["kouhi-2-futansha"] = kouhi_list[1].futansha;
-			data["kouhi-2-jukyuusha"] = kouhi_list[1].jukyuusha;
-		}
-		var at = moment(visit.v_datetime);
-		data["koufu-date"] = [at.year(), at.month()+1, at.date()];
-	}
-	["drugs", "futan-wari"].forEach(function(key){
-		data[key] = dbData[key];
-	})
-}
-
 function createBaseData(config){
 	var data = {};
 	["hakkou-kikan", "doctor"].forEach(function(key){
@@ -146,48 +94,6 @@ module.exports = function(config){
 	var app = express();
 	app.use(bodyParser.urlencoded({extended: false}));
 	app.use(bodyParser.json());
-	app.get("/test/from-db-data", function(req, res){
-		var data = createBaseData(config);
-		applyDbData(data, {
-			patient: {
-				last_name: "匿名",
-				first_name: "太郎",
-				birth_day: "1968-10-23",
-				sex: "M"
-			},
-			visit: {
-				// shahokokuho: {
-				// 	hokensha_bangou: "87654321",
-				// 	hihokensha_kigou: "記号",
-				// 	hihokensha_bangou: "番号",
-				// 	honnin: 1
-				// },
-				koukikourei: {
-					hokensha_bangou: 123456,
-					hihokensha_bangou: 4321
-				},
-				kouhi_list: [
-					{
-						futansha: 12345678,
-						jukyuusha: 1234567
-					},
-					{
-						futansha: 23456789,
-						jukyuusha: 2345678
-					},
-				],
-				v_datetime: "2016-10-12"
-			},
-            drugs: "Ｒｐ）\n１）．．．\n２）．．．",
-            "futan-wari": 3
-		});
-		render(req, res, data);
-	});
-	app.post("/from-db-data", function(req, res){
-		var data = createBaseData(config);
-		applyDbData(data, req.body);
-		render(req, res, data);
-	});
 	app.post("/", function(req, res){
 		var data = createBaseData(config);
 		var postData;
@@ -199,6 +105,7 @@ module.exports = function(config){
 		for(var key in postData ){
 			data[key] = postData[key];
 		}
+		console.log("data", data);
 		render(req, res, data);
 	});
 	app.get("/test", function(req, res){
