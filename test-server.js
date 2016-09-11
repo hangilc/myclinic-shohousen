@@ -1,17 +1,15 @@
-var app = require("express")();
+var express = require("express");
+var bodyParser = require("body-parser");
 var shohousen = require("./index");
+var config = require("./sample-config/shohousen-config");
 
-var config = {
-	"hakkou-kikan": [
-        "〒123-456 東京都無名区或無名1-23-45",
-        "無名クリニック",
-	    "電話 03 (1234) 5678",
-    	"1234567"
-    ],
-    "doctor": "診療一郎"
-};
-
-app.use("/shohousen", shohousen(config));
+var app = express();
+var subApp = express();
+subApp.use(bodyParser.urlencoded({extended: false}));
+subApp.use(bodyParser.json());
+shohousen.initApp(subApp, config);
+subApp.use(express.static(shohousen.staticDir));
+app.use("/shohousen", subApp);
 
 var port = 8081;
 app.listen(port, function(){

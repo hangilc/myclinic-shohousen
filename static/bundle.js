@@ -63,7 +63,7 @@
 	var settingWorkArea = "settingWorkArea";
 
 	var printServerHost = "localhost";
-	var printServerPort = 8082;
+	var printServerPort = window.printServerPort;
 	var printerSettingLocalStorageKey = "ShohousenPrinterSetting";
 
 	function getSelectedSetting(){

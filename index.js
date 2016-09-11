@@ -1,12 +1,12 @@
 "use strict"
 
-var express = require("express");
-var bodyParser = require("body-parser");
 var hogan = require("hogan");
 var fs = require("fs");
 var indexTmpl = hogan.compile(fs.readFileSync("./web-src/index.html", {encoding: "utf-8"}));
 var Shohousen = require("myclinic-drawer-forms").Shohousen;
-var moment = require("moment");
+
+exports.staticDir = __dirname + "/static";
+var printServerPort = 8082;
 
 function render(req, res, data){
 	var shohousen = new Shohousen();
@@ -72,10 +72,11 @@ function render(req, res, data){
 	}
 	var ops = shohousen.getOps();
 	var drawerPage = JSON.stringify([ops]);
-	var printManageUrl = "http://localhost:8082/";
+	var printManageUrl = "http://localhost:" + printServerPort + "/";
 	res.end(indexTmpl.render({
 		drawerPage: drawerPage, 
-		"print-manage-url": printManageUrl,
+		printManageUrl: printManageUrl,
+		printServerPort: printServerPort,
 		base: req.baseUrl
 	})); 
 }
@@ -90,10 +91,10 @@ function createBaseData(config){
 	return data;
 }
 
-module.exports = function(config){ 
-	var app = express();
-	app.use(bodyParser.urlencoded({extended: false}));
-	app.use(bodyParser.json());
+exports.initApp = function(app, config){ 
+	if( "print-server-port" in config ){
+		printServerPort = config["print-server-port"];
+	}
 	app.post("/", function(req, res){
 		var data = createBaseData(config);
 		var postData;
@@ -105,7 +106,6 @@ module.exports = function(config){
 		for(var key in postData ){
 			data[key] = postData[key];
 		}
-		console.log("data", data);
 		render(req, res, data);
 	});
 	app.get("/test", function(req, res){
@@ -138,6 +138,5 @@ module.exports = function(config){
 	app.get("/", function(req, res){
 		render(req, res, {});
 	});
-	app.use(express.static("static"));
 	return app;
 }
