@@ -2,7 +2,7 @@
 
 var hogan = require("hogan");
 var fs = require("fs");
-var indexTmpl = hogan.compile(fs.readFileSync("./web-src/index.html", {encoding: "utf-8"}));
+var indexTmpl = hogan.compile(fs.readFileSync(__dirname + "/web-src/index.html", {encoding: "utf-8"}));
 var Shohousen = require("myclinic-drawer-forms").Shohousen;
 
 exports.staticDir = __dirname + "/static";
