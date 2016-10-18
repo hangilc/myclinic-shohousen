@@ -1,6 +1,6 @@
 "use strict";
 
-var hogan = require("hogan");
+var hogan = require("hogan.js");
 var settingsTmplSrc = require("raw!./list-printer-settings.html");
 var settingsTmpl = hogan.compile(settingsTmplSrc);
 

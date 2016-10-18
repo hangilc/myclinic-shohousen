@@ -1,6 +1,6 @@
 "use strict"
 
-var hogan = require("hogan");
+var hogan = require("hogan.js");
 var fs = require("fs");
 var indexTmpl = hogan.compile(fs.readFileSync(__dirname + "/web-src/index.html", {encoding: "utf-8"}));
 var Shohousen = require("myclinic-drawer-forms").Shohousen;

@@ -1,6 +1,6 @@
 {
   "name": "myclinic-shohousen",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Shohousen web page",
   "main": "index.js",
   "repository": {
@@ -14,7 +14,7 @@
   "author": "Hangil Chang",
   "license": "MIT",
   "dependencies": {
-    "hogan": "^1.0.2",
+    "hogan.js": "^3.0.2",
     "myclinic-drawer": "^1.0.0",
     "myclinic-drawer-forms": "^1.0.0",
     "myclinic-drawer-svg": "^1.0.1"
