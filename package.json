@@ -1,6 +1,6 @@
 {
   "name": "myclinic-shohousen",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Shohousen web page",
   "main": "index.js",
   "repository": {
