@@ -6,7 +6,7 @@ var indexTmpl = hogan.compile(fs.readFileSync(__dirname + "/web-src/index.html",
 var Shohousen = require("myclinic-drawer-forms").Shohousen;
 
 exports.staticDir = __dirname + "/static";
-var printServerPort = 8082;
+// var printServerPort = 8082;
 
 function render(req, res, data){
 	var shohousen = new Shohousen();
@@ -72,11 +72,11 @@ function render(req, res, data){
 	}
 	var ops = shohousen.getOps();
 	var drawerPage = JSON.stringify([ops]);
-	var printManageUrl = "http://localhost:" + printServerPort + "/";
+	var printManageUrl = "/printer/";
 	res.end(indexTmpl.render({
 		drawerPage: drawerPage, 
 		printManageUrl: printManageUrl,
-		printServerPort: printServerPort,
+		// printServerPort: printServerPort,
 		base: req.baseUrl
 	})); 
 }
@@ -92,9 +92,9 @@ function createBaseData(config){
 }
 
 exports.initApp = function(app, config){ 
-	if( "print-server-port" in config ){
-		printServerPort = config["print-server-port"];
-	}
+//	if( "print-server-port" in config ){
+//		printServerPort = config["print-server-port"];
+//	}
 	app.post("/", function(req, res){
 		var data = createBaseData(config);
 		var postData;

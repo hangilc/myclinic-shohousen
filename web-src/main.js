@@ -16,8 +16,8 @@ var selectedSettingId = "selectedSetting";
 var chooseSettingId = "chooseSetting";
 var settingWorkArea = "settingWorkArea";
 
-var printServerHost = "localhost";
-var printServerPort = window.printServerPort;
+// var printServerHost = "localhost";
+// var printServerPort = window.printServerPort;
 var printerSettingLocalStorageKey = "ShohousenPrinterSetting";
 
 function getSelectedSetting(){
@@ -34,7 +34,8 @@ function setSelectedSetting(name){
 }
 
 function printServerUrl(){
-	return location.protocol + "//" + printServerHost + ":" + printServerPort;
+	// return location.protocol + "//" + printServerHost + ":" + printServerPort;
+	return "/printer";
 }
 
 function updateSelectedSetting(){
@@ -48,7 +49,7 @@ function bindPrint(button){
 	button.addEventListener("click", function(event){
 		var pages = drawerPages;
 		var setting = getSelectedSetting();
-		var port = printServerPort;
+		// var port = printServerPort;
 		fetch(printServerUrl() + "/print", {
 			method: "POST",
 			headers: {
@@ -58,8 +59,8 @@ function bindPrint(button){
 				pages: pages,
 				setting: setting
 			}),
-			mode: "cors",
-			cache: "no-cache"
+			// mode: "cors",
+			// cache: "no-cache"
 		})
 		.then(function(response){
 			if( !response.ok ){
@@ -78,8 +79,8 @@ function bindChooseSetting(e){
 	e.addEventListener("click", function(event){
 		event.preventDefault();
 		fetch(printServerUrl() + "/setting", {
-			mode: "cors",
-			cache: "no-cache"
+			// mode: "cors",
+			// cache: "no-cache"
 		})
 		.then(function(response){
 			if( !response.ok ){

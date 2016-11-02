@@ -20,6 +20,7 @@
     "myclinic-drawer-svg": "^1.0.1"
   },
   "devDependencies": {
+    "myclinic-drawer-print-server": "^2.0.0",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "moment": "^2.14.1",
